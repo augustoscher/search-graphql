@@ -1,7 +1,7 @@
 const {
-  NODE_ENV = 'development',
-  MONGODB_URL = 'mongodb://db:27017/graphql',
-  PORT = 4001
+  NODE_ENV = process.env.NODE_ENV || 'development',
+  ELASTIC_URL = process.env.ELASTIC_URL || '',
+  PORT = process.env.PORT || 4001
 } = process.env
 
-export { NODE_ENV, MONGODB_URL, PORT }
+export { NODE_ENV, ELASTIC_URL, PORT }
