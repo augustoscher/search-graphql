@@ -13,6 +13,7 @@ export const resolvers = {
   },
   Query: {
     search: (_, args) => {
+      // For the sake of simplicity, we're calling ES client directly, but it could be an api call.
       return searchClient.search(args);
     },
   },
