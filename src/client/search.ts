@@ -1,37 +1,37 @@
-import elasticsearch from "elasticsearch";
-import { ELASTIC_URL } from "../config/constants";
+import elasticsearch from 'elasticsearch'
+import { ELASTIC_URL } from '../config/constants'
 
 type SearchArgs = {
-  q: string;
-  artifact: string;
-  from?: number;
-  size?: number;
-};
+  q: string
+  artifact: string
+  from?: number
+  size?: number
+}
 
 class SearchClient {
-  protected elasticClient: elasticsearch.Client;
-  protected artifactMap: Map<string, string[]>;
+  protected elasticClient: elasticsearch.Client
+  protected artifactMap: Map<string, string[]>
 
   constructor() {
     this.elasticClient = new elasticsearch.Client({
       host: ELASTIC_URL,
-      log: "trace",
-    });
+      log: 'trace'
+    })
     this.artifactMap = new Map([
       [
-        "GENERAL",
+        'GENERAL',
         [
-          "JURISPRUDENCIA",
-          "SUMULA",
-          "MODELOS",
-          "PECAS",
-          "ARTIGOS",
-          "NOTICIAS",
-          "LEGISLACAO",
-        ],
+          'JURISPRUDENCIA',
+          'SUMULA',
+          'MODELOS',
+          'PECAS',
+          'ARTIGOS',
+          'NOTICIAS',
+          'LEGISLACAO'
+        ]
       ],
-      ["JURISPRUDENCIA", ["JURISPRUDENCIA"]],
-    ]);
+      ['JURISPRUDENCIA', ['JURISPRUDENCIA']]
+    ])
   }
 
   async search({ artifact, q, from, size }: SearchArgs) {
@@ -42,14 +42,14 @@ class SearchClient {
       body: {
         query: {
           match: {
-            body: q,
-          },
-        },
-      },
-    });
+            body: q
+          }
+        }
+      }
+    })
 
-    return data;
+    return data
   }
 }
 
-export default new SearchClient();
+export default new SearchClient()
