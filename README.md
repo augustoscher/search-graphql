@@ -24,3 +24,29 @@ make dev
 
 Search GraphQL will be running on [localhost:4001/graphql](http://localhost:4001/graphql)
 
+
+## Example
+
+This query should fetch data from elasticsearch. Note that we don't have access of fields from other subgraphs.
+
+```gql
+query Search($artifact: String!, $q: String!) {
+  search(artifact: $artifact, q: $q) {
+    id
+    documentId
+    title
+    body
+    relatedDocument {
+      documentId
+      # mandatoryPrecedent isn't available in search subgaph
+    }
+  }
+}
+
+# variables
+{
+  "artifact": "JURISPRUDENCIA",
+  "q": "danos morais"
+}
+
+```
