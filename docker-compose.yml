@@ -17,10 +17,35 @@ services:
     ports:
       - 5601:5601
     environment:
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      - 'ELASTICSEARCH_URL:http://elasticsearch:9200'
+      - 'ELASTICSEARCH_HOST:elasticsearch'
+      - 'ELASTICSEARCH_PORT:9200'
     networks:
       - elastic
+    depends_on:
+      - elasticsearch
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.15.1
+    container_name: logstash
+    volumes:
+      - './logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml'
+      - './logstash/pipeline:/usr/share/logstash/pipeline'
+    command: sh -c "logstash -f /usr/share/logstash/pipeline/documents.conf"
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    environment:
+      - 'HEAP_SIZE:1g'
+      - 'LS_JAVA_OPTS=-Xms1g -Xmx1g'
+      - 'ELASTICSEARCH_HOST:elasticsearch'
+      - 'ELASTICSEARCH_PORT:9200'
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch
 
   search-graphql:
     container_name: search-graphql
