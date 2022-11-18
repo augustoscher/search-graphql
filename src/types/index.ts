@@ -7,13 +7,13 @@ export const typeDefs = gql`
       import: ["@key", "@shareable"]
     )
 
-  type Document @key(fields: "id") {
-    id: ID!
+  type Document @key(fields: "documentId") {
+    documentId: String!
   }
 
   type SearchResult {
     id: ID!
-    documentId: ID!
+    documentId: String!
     title: String!
     artifact: String!
     body: String
