@@ -1,5 +1,5 @@
 # search-graphql
-Search Domain Graph Service (DGS), corresponding to the search domain from [Jus Edge GraphQL](https://github.com/augustoscher/jus-edge-graphql).
+Search Domain Graph Service (DGS), corresponding to the search domain from [Supergraph](https://github.com/augustoscher/supergraph).
 Responsible of searching data in Elasticsearch cluster.
 It's builded with [Apollo Federation](https://www.apollographql.com/docs/federation/) v2 which is an open source architecture for building a distributed graph.
 
