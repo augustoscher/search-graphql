@@ -9,6 +9,22 @@ It's possible to run application inside docker. But also, it's possible to run i
 
 - Node v16
 - Elasticsearch
+- Kibana
+
+elastic:
+```
+docker network create elastic
+
+docker run -d --name es01-test --net elastic -p 127.0.0.1:9200:9200 -p 127.0.0.1:9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.17.12
+```
+
+kibana:
+```
+docker run -d --name kib01-test --net elastic -p 127.0.0.1:5601:5601 -e "ELASTICSEARCH_HOSTS=http://es01-test:9200" docker.elastic.co/kibana/kibana:7.17.12
+```
+
+See the [docs](https://www.elastic.co/guide/en/kibana/7.17/docker.html).
+
 
 ## Running
 
@@ -17,10 +33,7 @@ To run application, just type:
 ```
 yarn dev
 ```
-or in docker:
-```
-make dev
-```
+
 
 Search GraphQL will be running on [localhost:4001/graphql](http://localhost:4001/graphql)
 
@@ -50,3 +63,5 @@ query Search($artifact: String!, $q: String!) {
 }
 
 ```
+
+

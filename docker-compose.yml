@@ -1,51 +1,34 @@
-version: "3"
+version: '3.7'
 services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
-    container_name: elasticsearch
-    ports:
-      - 9200:9200
-      - 9300:9300
-    environment:
-      discovery.type: single-node
-    networks:
-      - elastic
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+  #   container_name: elasticsearch
+  #   restart: unless-stopped
+  #   ports:
+  #     - "9200:9200"
+  #     - "9300:9300"
+  #   environment:
+  #     - 'discovery.type:single-node'
+  #     - 'ES_JAVA_OPTS:-Xms2g -Xmx2g'
+  #     - 'xpack.monitoring.enabled:true'
+  #     - 'bootstrap.system_call_filter=false'
+  #   networks:
+  #     - elastic
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.15.1
-    container_name: kibana
-    ports:
-      - 5601:5601
-    environment:
-      - 'ELASTICSEARCH_URL:http://elasticsearch:9200'
-      - 'ELASTICSEARCH_HOST:elasticsearch'
-      - 'ELASTICSEARCH_PORT:9200'
-    networks:
-      - elastic
-    depends_on:
-      - elasticsearch
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.15.1
-    container_name: logstash
-    volumes:
-      - './logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml'
-      - './logstash/pipeline:/usr/share/logstash/pipeline'
-    command: sh -c "logstash -f /usr/share/logstash/pipeline/documents.conf"
-    ports:
-      - "5044:5044"
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
-      - "9600:9600"
-    environment:
-      - 'HEAP_SIZE:1g'
-      - 'LS_JAVA_OPTS=-Xms1g -Xmx1g'
-      - 'ELASTICSEARCH_HOST:elasticsearch'
-      - 'ELASTICSEARCH_PORT:9200'
-    networks:
-      - elastic
-    depends_on:
-      - elasticsearch
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:7.15.0
+  #   container_name: kibana
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5601:5601"
+  #   environment:
+  #     - 'ELASTICSEARCH_URL:http://elasticsearch:9200'
+  #     - 'ELASTICSEARCH_HOST:elasticsearch'
+  #     - 'ELASTICSEARCH_PORT:9200'
+  #   networks:
+  #     - elastic
+  #   depends_on:
+  #     - elasticsearch
 
   search-graphql:
     container_name: search-graphql
@@ -65,4 +48,5 @@ services:
 
 networks:
   elastic:
+    name: elastic
     driver: bridge
