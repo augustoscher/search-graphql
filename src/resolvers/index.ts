@@ -10,7 +10,8 @@ export const resolvers = {
         // Allow data fetch from document subgraph.
         // This will trigger __resolveReference resolver in Document type in document domain graph service
         __typename: 'Document',
-        documentId: searchResult.documentId
+        documentId: searchResult.documentId,
+        artifact: searchResult.artifact
       }
     }
   },
