@@ -14,8 +14,8 @@ class SearchClient {
 
   constructor() {
     this.elasticClient = new elasticsearch.Client({
-      host: ELASTIC_URL,
-      log: 'trace'
+      host: ELASTIC_URL
+      // log: 'trace'
     })
     this.artifactMap = new Map([
       [
