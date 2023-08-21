@@ -9,7 +9,6 @@ export const typeDefs = gql`
 
   type Document @key(fields: "documentId") {
     documentId: String!
-    artifact: String
   }
 
   type SearchResult {
